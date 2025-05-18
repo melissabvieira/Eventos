@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Criar Evento - TICKETMAIS</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      padding-top: 80px;
+      padding-bottom: 60px;
+    }
+
+    header {
+      background-color: #4d56dd;
+      color: white;
+      padding: 30px 40px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .ticketmais {
+      font-style: italic;
+      font-size: 20px;
+    }
+
+    footer {
+      background-color: #4d56dd;
+      color: white;
+      padding: 20px 40px;
+      text-align: center;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .form-container {
+      margin: 50px auto;
+      padding: 30px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 800px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      font-weight: bold;
+    }
+
+    .btn-submit {
+      background-color: #4d56dd;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn-submit:hover {
+      background-color: #3c47b7;
+    }
+
+    .form-control[readonly] {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+  <div class="ticketmais">TICKETMAIS</div>
+  <a href="home.html" class="btn btn-light">Voltar</a>
+</header>
+
+
+  <div class="form-container">
+    <h2>Criar Evento</h2>
+    <form id="eventForm">
+      <div class="form-group">
+        <label for="tema">Tema</label>
+        <input type="text" class="form-control" id="tema" name="tema" required />
+      </div>
+
+      <div class="form-group">
+        <label for="descricao_evento">Descrição do Evento</label>
+        <textarea class="form-control" id="descricao_evento" name="descricao_evento" rows="4" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="data_evento">Data do Evento</label>
+        <input type="datetime-local" class="form-control" id="data_evento" name="data_evento" required />
+      </div>
+
+      <div class="form-group">
+        <label for="inscritos">Inscritos</label>
+        <input type="text" class="form-control" id="inscritos" name="inscritos" placeholder="ID1, ID2, ID3" />
+      </div>
+
+      <div class="form-group">
+        <label for="promotor">Promotor</label>
+        <input type="text" class="form-control" id="promotor" name="promotor" placeholder="Nome do promotor" required />
+      </div>
+
+      <div class="form-group">
+        <label for="localizacao">Localização</label>
+        <input type="text" class="form-control" id="localizacao" name="localizacao" placeholder="Cidade, Estado, País" required />
+      </div>
+
+      <div class="form-group">
+        <label for="tags">Tags</label>
+        <input type="text" class="form-control" id="tags" name="tags" placeholder="Ex: música, esporte, tecnologia" />
+      </div>
+
+      <div class="form-group">
+        <label for="vagas_totais">Vagas Totais</label>
+        <input type="number" class="form-control" id="vagas_totais" name="vagas_totais" placeholder="Digite as vagas totais" required />
+      </div>
+
+      <div class="form-group">
+        <label for="vagas_disponiveis">Vagas Disponíveis</label>
+        <input type="text" class="form-control" id="vagas_disponiveis" name="vagas_disponiveis" readonly />
+      </div>
+
+      <button type="submit" class="btn-submit">Criar Evento</button>
+    </form>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 - TICKETMAIS</p>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+  <script>
+    document.getElementById('eventForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const formData = new FormData(event.target);
+
+      const vagasTotais = parseInt(formData.get('vagas_totais'), 10);
+
+      const data = {
+        tema: formData.get('tema'),
+        descricao_evento: formData.get('descricao_evento'),
+        data_evento: formData.get('data_evento'),
+        inscritos: formData.get('inscritos') ? formData.get('inscritos').split(',').map(id => id.trim()) : [],
+        promotor: { nome: formData.get('promotor') },
+        localizacao: { endereco: formData.get('localizacao') },
+        tags: formData.get('tags') ? formData.get('tags').split(',').map(tag => tag.trim()) : [],
+        vagas_totais: vagasTotais,
+        vagas_disponiveis: vagasTotais
+      };
+
+      document.getElementById('vagas_disponiveis').value = vagasTotais;
+
+      fetch('http://seu-backend.com/api/eventos' , {           //trocar pelo url da carol
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        if (!response.ok) throw new Error('Erro na resposta da API');
+        return response.json();
+      })
+      .then(data => {
+        alert('Evento criado com sucesso!');
+        document.getElementById('eventForm').reset();
+        document.getElementById('vagas_disponiveis').value = '';
+      })
+      .catch(error => {
+        console.error('Erro ao criar evento:', error);
+        alert('Ocorreu um erro ao criar o evento. Verifique os dados e tente novamente.');
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Meus Eventos - TICKETMAIS</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      padding-top: 80px;
+      padding-bottom: 60px;
+    }
+
+    header {
+      background-color: #4d56dd;
+      color: white;
+      padding: 30px 40px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    footer {
+      background-color: #4d56dd;
+      color: white;
+      padding: 20px 40px;
+      text-align: center;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .ticketmais {
+      font-style: italic;
+      font-size: 20px;
+    }
+
+    .event-list {
+      max-width: 1000px;
+      margin: 50px auto;
+    }
+
+    .event-card {
+      background-color: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .event-card h5 {
+      color: #4d56dd;
+    }
+
+    .btn-group {
+      margin-top: 10px;
+    }
+
+    .btn-editar {
+      background-color: #ffc107;
+      border: none;
+      color: black;
+    }
+
+    .btn-excluir {
+      background-color: #dc3545;
+      border: none;
+      color: white;
+    }
+
+    .btn-editar:hover {
+      background-color: #e0a800;
+    }
+
+    .btn-excluir:hover {
+      background-color: #c82333;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="ticketmais">TICKETMAIS</div>
+  <a href="home.html" class="btn btn-light">Voltar</a>
+</header>
+
+<main class="event-list">
+  <h2>Meus Eventos Criados</h2>
+  <div id="eventosContainer">
+    <p>Carregando eventos...</p>
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2025 - TICKETMAIS</p>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const container = document.getElementById('eventosContainer');
+
+    function carregarEventos() {
+      fetch('http://seu-backend.com/api/eventos') // trocar pela URL da carol
+        .then(response => {
+          if (!response.ok) throw new Error('Erro ao buscar eventos');
+          return response.json();
+        })
+        .then(data => {
+          if (!Array.isArray(data) || data.length === 0) {
+            container.innerHTML = '<p>Nenhum evento encontrado.</p>';
+            return;
+          }
+
+          container.innerHTML = '';
+          data.forEach(evento => {
+            const card = document.createElement('div');
+            card.className = 'event-card';
+            card.innerHTML = `
+              <h5>${evento.tema}</h5>
+              <p><strong>Descrição:</strong> ${evento.descricao_evento}</p>
+              <p><strong>Data:</strong> ${new Date(evento.data_evento).toLocaleString()}</p>
+              <p><strong>Localização:</strong> ${evento.localizacao?.endereco || 'Não informado'}</p>
+              <p><strong>Promotor:</strong> ${evento.promotor?.nome || 'Não informado'}</p>
+              <p><strong>Vagas:</strong> ${evento.vagas_disponiveis}/${evento.vagas_totais}</p>
+              <p><strong>Tags:</strong> ${evento.tags?.join(', ') || 'Nenhuma'}</p>
+              <p><strong>Inscritos:</strong> ${evento.inscritos?.length || 0}</p>
+
+              <div class="btn-group">
+                <button class="btn btn-editar btn-sm mr-2" onclick="editarEvento('${evento._id}')">Editar</button>
+                <button class="btn btn-excluir btn-sm" onclick="excluirEvento('${evento._id}', this)">Excluir</button>
+              </div>
+            `;
+            container.appendChild(card);
+          });
+        })
+        .catch(error => {
+          console.error(error);
+          container.innerHTML = '<p>Erro ao carregar eventos.</p>';
+        });
+    }
+
+    window.excluirEvento = function(id, btn) {
+      if (!confirm("Tem certeza que deseja excluir este evento?")) return;
+
+      fetch(`http://seu-backend.com/api/eventos/${id}`, {  //trocar pelo url da carol
+        method: 'DELETE'
+      })
+        .then(response => {
+          if (!response.ok) throw new Error('Erro ao excluir');
+          alert('Evento excluído com sucesso!');
+          carregarEventos();
+        })
+        .catch(error => {
+          console.error(error);
+          alert('Erro ao excluir evento');
+        });
+    };
+
+    window.editarEvento = function(id) {
+      window.location.href = `editar-evento.html?id=${id}`;
+    };
+
+    carregarEventos();
+  });
+</script>
+
+</body>
+</html>
