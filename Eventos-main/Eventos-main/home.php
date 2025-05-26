@@ -67,15 +67,19 @@
       width: 100%;
     }
 
-    .carousel {
-      max-width: 2000px;
-      margin: 5px auto;
-    }
+    .carousel,
+.carousel-item {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+}
 
-    .carousel img {
-      height: 450px;
-      object-fit: cover;
-    }
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
   </style>
 </head>
 <body>
@@ -98,16 +102,16 @@
     </ol>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img class="d-block w-100" src="imagens/superliga.jpeg" alt="Slide 1">
+        <img class="d-block w-100" src="../imagens/superliga.jpeg" alt="Slide 1">
       </div>
       <div class="carousel-item">
-        <img class="d-block w-100" src="imagens/linkinpark.jpeg" alt="Slide 2">
+        <img class="d-block w-100" src="../imagens/linkinpark.jpeg" alt="Slide 2">
       </div>
       <div class="carousel-item">
-        <img class="d-block w-100" src="imagens/dualipa.jpeg" alt="Slide 3">
+        <img class="d-block w-100" src="../imagens/dualipa.jpeg" alt="Slide 3">
       </div>
       <div class="carousel-item">
-        <img class="d-block w-100" src="imagens/carnaval.jpeg" alt="Slide 4">
+        <img class="d-block w-100" src="../imagens/carnaval.jpeg" alt="Slide 4">
       </div>
     </div>
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
