@@ -111,6 +111,15 @@
         <img class="d-block w-100" src="../imagens/dualipa.jpeg" alt="Slide 3">
       </div>
       <div class="carousel-item">
+        <img class="d-block w-100" src="../imagens/bsb.jpeg" alt="Slide 4">
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="../imagens/katyperry.jpeg" alt="Slide 4">
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="../imagens/evento.jpeg" alt="Slide 4">
+      </div>
+      <div class="carousel-item">
         <img class="d-block w-100" src="../imagens/carnaval.jpeg" alt="Slide 4">
       </div>
     </div>
