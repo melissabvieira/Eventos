@@ -78,7 +78,6 @@ if (isset($_GET['ok'])) {
       color: white;
       padding: 20px 40px;
       text-align: center;
-      
       bottom: 0;
       width: 100%;
     }
@@ -88,6 +87,12 @@ if (isset($_GET['ok'])) {
         text-align: center;
         flex-direction: column;
       }
+    }
+
+    .btn-group {
+      display: inline-flex;
+      gap: 10px;
+      justify-content: center;
     }
   </style>
 </head>
@@ -131,8 +136,9 @@ if (isset($_GET['ok'])) {
         <input type="number" class="form-control" name="vagas_totais" id="vagas_totais" required>
       </div>
 
-      <div class="text-center">
+      <div class="text-center btn-group">
         <button type="submit" class="btn btn-submit">Criar Evento</button>
+        <button type="reset" class="btn btn-secondary">Cancelar</button>
       </div>
     </form>
   </div>
