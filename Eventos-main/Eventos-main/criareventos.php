@@ -1,12 +1,16 @@
-<?php if (isset($_GET['ok'])) echo "<script>alert('Evento criado com sucesso!');</script>"; ?>
+<?php
+if (isset($_GET['ok'])) {
+    echo "<script>alert('Evento criado com sucesso!');</script>";
+}
+?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Criar Evento - TICKETMAIS</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
   <style>
     body {
       background: #f7f9fc;
@@ -38,6 +42,7 @@
       border: none;
       border-radius: 12px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      background: white;
     }
 
     .card h2 {
@@ -61,7 +66,7 @@
       border: none;
       border-radius: 6px;
       padding: 10px 20px;
-      transition: 0.3s;
+      transition: background-color 0.3s ease;
     }
 
     .btn-submit:hover {
@@ -73,7 +78,7 @@
       color: white;
       padding: 20px 40px;
       text-align: center;
-      position: fixed;
+      
       bottom: 0;
       width: 100%;
     }
@@ -99,35 +104,35 @@
     <form method="POST" action="salvareventos.php">
       <div class="form-group">
         <label for="tema">Tema</label>
-        <input type="text" class="form-control" name="tema" required>
+        <input type="text" class="form-control" name="tema" id="tema" required>
       </div>
       <div class="form-group">
         <label for="descricao_evento">Descrição do Evento</label>
-        <textarea class="form-control" name="descricao_evento" rows="4" required></textarea>
+        <textarea class="form-control" name="descricao_evento" id="descricao_evento" rows="4" required></textarea>
       </div>
       <div class="form-group">
         <label for="data_evento">Data do Evento</label>
-        <input type="datetime-local" class="form-control" name="data_evento" required>
+        <input type="datetime-local" class="form-control" name="data_evento" id="data_evento" required>
       </div>
       <div class="form-group">
         <label for="inscritos">Inscritos (IDs separados por vírgula)</label>
-        <input type="text" class="form-control" name="inscritos">
+        <input type="text" class="form-control" name="inscritos" id="inscritos">
       </div>
       <div class="form-group">
         <label for="promotor">Promotor</label>
-        <input type="text" class="form-control" name="promotor" required>
+        <input type="text" class="form-control" name="promotor" id="promotor" required>
       </div>
       <div class="form-group">
         <label for="localizacao">Localização</label>
-        <input type="text" class="form-control" name="localizacao" required>
+        <input type="text" class="form-control" name="localizacao" id="localizacao" required>
       </div>
       <div class="form-group">
         <label for="tags">Tags (ex: música, arte)</label>
-        <input type="text" class="form-control" name="tags">
+        <input type="text" class="form-control" name="tags" id="tags">
       </div>
       <div class="form-group">
         <label for="vagas_totais">Vagas Totais</label>
-        <input type="number" class="form-control" name="vagas_totais" required>
+        <input type="number" class="form-control" name="vagas_totais" id="vagas_totais" required>
       </div>
 
       <div class="text-center">
