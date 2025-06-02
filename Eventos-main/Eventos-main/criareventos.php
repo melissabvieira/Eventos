@@ -115,10 +115,6 @@ if (isset($_GET['ok'])) {
         <input type="datetime-local" class="form-control" name="data_evento" id="data_evento" required>
       </div>
       <div class="form-group">
-        <label for="inscritos">Inscritos (IDs separados por vírgula)</label>
-        <input type="text" class="form-control" name="inscritos" id="inscritos">
-      </div>
-      <div class="form-group">
         <label for="promotor">Promotor</label>
         <input type="text" class="form-control" name="promotor" id="promotor" required>
       </div>
