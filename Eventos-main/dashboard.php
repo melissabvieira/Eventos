@@ -45,14 +45,16 @@ $eventos = $collection->find()->toArray();
     table {
       margin-top: 20px;
     }
-    footer {
+   footer {
       background-color: #4d56dd;
       color: white;
-      padding: 15px 40px;
+      padding: 20px 40px;
       text-align: center;
-      margin-top: 40px;
-      border-radius: 0 0 12px 12px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
     }
+
   </style>
 </head>
 <body>
