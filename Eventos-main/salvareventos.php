@@ -1,26 +1,22 @@
 <?php
-require 'vendor/autoload.php'; 
+require 'classes/bd.php';
 
-use MongoDB\Client;
-use MongoDB\BSON\UTCDateTime;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $evento = [
+        'tema' => $_POST['tema'],
+        'descricao_evento' => $_POST['descricao_evento'],
+        'data_evento' => $_POST['data_evento'],
+        'promotor' => $_POST['promotor'],
+        'localizacao' => $_POST['localizacao'],
+        'tags' => $_POST['tags'],
+        'vagas_totais' => (int) $_POST['vagas_totais']
+    ];
 
-$mongo = new Client("mongodb://localhost:27017"); // alterar para o URL da Carol
-$db = $mongo->eventos; 
-$colecao = $db->eventos;
-
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    die("Método inválido");
+    $collection->insertOne($evento);
+    header('Location: meuseventos.php?ok=1');
+    exit;
 }
 
-$tema = $_POST['tema'];
-$descricao = $_POST['descricao_evento'];
-$dataEventoStr = $_POST['data_evento'];
-$inscritos = !empty($_POST['inscritos']) ? array_map('trim', explode(',', $_POST['inscritos'])) : [];
-$promotor = $_POST['promotor'];
-$localizacao = $_POST['localizacao'];
-$tags = !empty($_POST['tags']) ? array_map('trim', explode(',', $_POST['tags'])) : [];
-$vagasTotais = (int) $_POST['vagas_totais'];
-$vagasDisponiveis = $vagasTotais;
 
 if (!$tema || !$descricao || !$dataEventoStr || !$promotor || !$localizacao || $vagasTotais <= 0) {
     die("Por favor, preencha todos os campos obrigatórios corretamente.");
