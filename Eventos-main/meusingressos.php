@@ -1,7 +1,7 @@
 <?php
 require 'classes/bd.php';
 
-$ingressos = $db->ingressos->find(); 
+$ingressos = $db->ingressos->find()->toArray(); 
 ?>
 
 <!DOCTYPE html>
@@ -49,6 +49,12 @@ $ingressos = $db->ingressos->find();
         .ingresso p {
             margin: 5px 0;
         }
+        .mensagem {
+            text-align: center;
+            margin-top: 50px;
+            color: #777;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
@@ -58,14 +64,18 @@ $ingressos = $db->ingressos->find();
     <a href="home.php" class="btn btn-light">Voltar</a>
 </header>
 
-<?php foreach ($ingressos as $ingresso): ?>
-    <div class="ingresso">
-        <h2><?= htmlspecialchars($ingresso['evento_nome'] ?? 'Sem nome') ?></h2>
-        <p><strong>Data:</strong> <?= htmlspecialchars($ingresso['data_evento'] ?? '-') ?></p>
-        <p><strong>Local:</strong> <?= htmlspecialchars($ingresso['local'] ?? '-') ?></p>
-        <p><strong>Ingresso:</strong> <?= htmlspecialchars($ingresso['tipo_ingresso'] ?? '-') ?></p>
-    </div>
-<?php endforeach; ?>
+<?php if (count($ingressos) === 0): ?>
+    <div class="mensagem">Nenhum ingresso foi adicionado =(</div>
+<?php else: ?>
+    <?php foreach ($ingressos as $ingresso): ?>
+        <div class="ingresso">
+            <h2><?= htmlspecialchars($ingresso['evento_nome'] ?? 'Sem nome') ?></h2>
+            <p><strong>Data:</strong> <?= htmlspecialchars($ingresso['data_evento'] ?? '-') ?></p>
+            <p><strong>Local:</strong> <?= htmlspecialchars($ingresso['local'] ?? '-') ?></p>
+            <p><strong>Ingresso:</strong> <?= htmlspecialchars($ingresso['tipo_ingresso'] ?? '-') ?></p>
+        </div>
+    <?php endforeach; ?>
+<?php endif; ?>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
