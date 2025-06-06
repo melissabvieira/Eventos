@@ -13,14 +13,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $descricao = $_POST['descricao'];
     $data = $_POST['data'];
 
-    $collection->updateOne(
-        ['_id' => $id],
-        ['$set' => [
-            'titulo' => $titulo,
-            'descricao' => $descricao,
-            'data' => $data
-        ]]
-    );
+   $collection->updateOne(
+    ['_id' => $id],
+    ['$set' => [
+        'titulo' => $titulo,
+        'descricao' => $descricao,
+        'data' => $data
+    ]]
+);
+
 
     header("Location: meuseventos.php");
     exit();
