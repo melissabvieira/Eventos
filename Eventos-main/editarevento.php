@@ -2,47 +2,34 @@
 session_start();
 require 'classes/bd.php';
 
-
 if (!isset($_SESSION['usuario_id'])) {
     header("Location: login.php");
     exit();
 }
 
-if (!isset($_GET['id'])) {
-    echo "Evento não encontrado.";
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $id = new MongoDB\BSON\ObjectId($_POST['id']);
+    $tema = $_POST['tema'];
+    $descricao_evento = $_POST['descricao_evento'];
+    $data_evento = $_POST['data_evento'];
+    $promotor = $_POST['promotor'];
+    $localizacao = $_POST['localizacao'];
+    $tags = $_POST['tags'];
+    $vagas_totais = (int) $_POST['vagas_totais'];
+
+    $collection->updateOne(
+        ['_id' => $id],
+        ['$set' => [
+            'tema' => $tema,
+            'descricao_evento' => $descricao_evento,
+            'data_evento' => $data_evento,
+            'promotor' => $promotor,
+            'localizacao' => $localizacao,
+            'tags' => $tags,
+            'vagas_totais' => $vagas_totais
+        ]]
+    );
+
+    header("Location: meuseventos.php?editado=1");
     exit();
 }
-
-$id = new MongoDB\BSON\ObjectId($_GET['id']);
-$evento = $collection->findOne(['_id' => $id]);
-
-if (!$evento) {
-    echo "Evento não encontrado.";
-    exit();
-}
-?>
-
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Editar Evento</title>
-</head>
-<body>
-    <h1>Editar Evento</h1>
-    <form action="atualizarevento.php" method="POST">
-        <input type="hidden" name="id" value="<?= $evento['_id'] ?>">
-
-        <label>Título:</label><br>
-        <input type="text" name="titulo" value="<?= htmlspecialchars($evento['titulo']) ?>" required><br><br>
-
-        <label>Descrição:</label><br>
-        <textarea name="descricao" required><?= htmlspecialchars($evento['descricao']) ?></textarea><br><br>
-
-        <label>Data:</label><br>
-        <input type="date" name="data" value="<?= $evento['data'] ?>" required><br><br>
-
-        <button type="submit">Salvar Alterações</button>
-    </form>
-</body>
-</html>
