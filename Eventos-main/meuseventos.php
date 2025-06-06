@@ -1,15 +1,32 @@
 <?php
 require 'classes/bd.php';
 
-// $eventos = $collection->find();
-$eventos = ['tema' => 'teste', 'descricao_evento' => 'teste de descrição', '_id' => '1'];
+if (isset($_GET['ok'])) {
+    echo "<script>alert('Evento criado com sucesso!');</script>";
+}
+
+$totalEventos = $collection->countDocuments();
+
+if ($totalEventos === 0) {
+    $collection->insertOne([
+        'tema' => 'Lollapalooza',
+        'descricao_evento' => 'Festival de eventos',
+        'data_evento' => '2025-04-04T20:00',
+        'promotor' => 'Sistema de Teste', 
+        'localizacao' => 'Local de Teste',
+        'tags' => 'teste,exemplo',
+        'vagas_totais' => 100
+    ]);
+}
+
+$eventos = $collection->find();
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Todos os Eventos</title>
+    <title>Meus Eventos</title>
     <style>
         body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
         h1 { text-align: center; }
@@ -27,18 +44,18 @@ $eventos = ['tema' => 'teste', 'descricao_evento' => 'teste de descrição', '_i
     </style>
 </head>
 <body>
-    <h1>Todos os Eventos</h1>
+    <h1>Meus Eventos</h1>
 
     <?php foreach ($eventos as $evento): ?>
         <div class="evento">
-            <h2><?= htmlspecialchars($evento['tema']) ?? 'Sem título' ?></h2>
-            <p><?= htmlspecialchars($evento['descricao_evento']) ?? 'Sem descrição' ?></p>
-            <p><strong>Data:</strong> <?= htmlspecialchars($evento['data_evento']) ?? 'Sem data' ?></p>
+            <h2><?= isset($evento['tema']) ? htmlspecialchars($evento['tema']) : 'Sem título' ?></h2>
+            <p><?= isset($evento['descricao_evento']) ? htmlspecialchars($evento['descricao_evento']) : 'Sem descrição' ?></p>
+            <p><strong>Data:</strong> <?= isset($evento['data_evento']) ? htmlspecialchars($evento['data_evento']) : 'Sem data' ?></p>
 
             <div class="botoes">
-                <a href="editarevento.php?id=<?= $evento['_id'] ?>">Editar</a>
+                <a href="editarevento.php?id=<?= (string) $evento['_id'] ?>">Editar</a>
                 <form action="excluirevento.php" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este evento?');">
-                    <input type="hidden" name="id" value="<?= $evento['_id'] ?>">
+                    <input type="hidden" name="id" value="<?= (string) $evento['_id'] ?>">
                     <button type="submit">Excluir</button>
                 </form>
             </div>
@@ -46,3 +63,4 @@ $eventos = ['tema' => 'teste', 'descricao_evento' => 'teste de descrição', '_i
     <?php endforeach; ?>
 </body>
 </html>
+ 
