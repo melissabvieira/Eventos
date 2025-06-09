@@ -1,12 +1,12 @@
-🎉 Plataforma de Eventos - Projeto de Banco de Dados Não Relacional
+### 🎉 Plataforma de Eventos - Projeto de Banco de Dados Não Relacional
 
 Este repositório contém o projeto Plataforma de Eventos, desenvolvido em PHP com conexão ao MongoDB, como parte da disciplina de Banco de Dados Não Relacional do 3º semestre da Fatec Araras.
 
-👥 Integrantes
+### 👥 Integrantes
 Melissa Vieira e Caroline Vantim
 
 
-⚙️ Funcionalidades: 
+### ⚙️ Funcionalidades: 
 C R U D
 
 Cadastro de eventos
@@ -21,7 +21,7 @@ Interface web simples para interação com os dados
 
 
 
-🎓 Instituição
+### 🎓 Instituição
 FATEC - Faculdade de Tecnologia de Araras
 Curso de Desenvolvimento de Software Multiplataforma
 Disciplina: Banco de Dados Não Relacional
