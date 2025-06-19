@@ -1,9 +1,0 @@
-Para finalizar precisamos ajustar os seguintes pontos:
-
-1 - Adicionar botão para o DASHBOARD  (X)
-2 - Adicionar a view dashboard (X)
-3 - Adicionar botão salvar ou cancelar no criar eventos (X)
-4 - Adicionar o require 'vendor/autoload.php' (X)
-5 - Verificar tela de 'meusingressos' e 'meuseventos'(X)
-6 - Teste de conexão com mongoBD (X)
-7 - Aguardar teste da Carol 
