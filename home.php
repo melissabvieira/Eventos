@@ -8,12 +8,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Compre Ingressos para Eventos | TICKETMAIS</title>
 
-  
   <meta name="description" content="Compre ingressos para eventos incríveis no TICKETMAIS. Shows, esportes e mais." />
   <meta name="keywords" content="TICKETMAIS, eventos, ingressos, shows, esportes, cultura" />
   <meta name="author" content="TICKETMAIS" />
 
-  
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
 
   <style>
@@ -68,18 +66,30 @@
     }
 
     .carousel,
-.carousel-item {
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-}
+    .carousel-item {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+    }
 
-.carousel-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+    .carousel-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 30px;
+      padding: 0 20px;
+    }
+
+    .event-card {
+      width: 300px;
+      margin: 15px;
+    }
   </style>
 </head>
 <body>
@@ -87,12 +97,10 @@
   <header>
     <div class="ticketmais">TICKETMAIS</div>
     <div class="acoes">
-    <a href="dashboard.php"><div>Dashboard</div></a>
+      <a href="dashboard.php"><div>Dashboard</div></a>
       <a href="meuseventos.php"><div>Meus eventos</div></a>
-       <a href="meusingressos.php"><div>Meus ingressos</div></a>
-        <a href="criareventos.php"><div>Criar eventos</div></a>
-      
-    </div>
+      <a href="meusingressos.php"><div>Meus ingressos</div></a>
+      <a href="criareventos.php"><div>Criar eventos</div></a>
     </div>
   </header>
 
@@ -105,25 +113,25 @@
     </ol>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img class="d-block w-100" src="../imagens/superliga.jpeg" alt="Slide 1">
+        <img class="d-block w-100" src="classes/imagens/dualipa.jpeg" alt="Show Dua Lipa">
       </div>
       <div class="carousel-item">
-        <img class="d-block w-100" src="../imagens/linkinpark.jpeg" alt="Slide 2">
+        <img class="d-block w-100" src="classes/imagens/linkinpark.jpeg" alt="Show Linkin Park">
       </div>
       <div class="carousel-item">
-        <img class="d-block w-100" src="../imagens/dualipa.jpeg" alt="Slide 3">
+        <img class="d-block w-100" src="classes/imagens/lagum.jpeg" alt="Show Lagum">
       </div>
       <div class="carousel-item">
-        <img class="d-block w-100" src="../imagens/bsb.jpeg" alt="Slide 4">
+        <img class="d-block w-100" src="classes/imagens/NBA.jpeg" alt="NBA">
       </div>
       <div class="carousel-item">
-        <img class="d-block w-100" src="../imagens/katyperry.jpeg" alt="Slide 4">
+        <img class="d-block w-100" src="classes/imagens/roupanova.jpeg" alt="Show Roupa nova">
       </div>
       <div class="carousel-item">
-        <img class="d-block w-100" src="../imagens/evento.jpeg" alt="Slide 4">
+        <img class="d-block w-100" src="classes/imagens/hellokitty.jpeg" alt="Hello Kitty">
       </div>
       <div class="carousel-item">
-        <img class="d-block w-100" src="../imagens/carnaval.jpeg" alt="Slide 4">
+        <img class="d-block w-100" src="classes/imagens/napoleao.jpeg" alt="Experiencia">
       </div>
     </div>
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -136,11 +144,75 @@
     </a>
   </div>
 
+  <div class="card-container">
+    <div class="card event-card">
+      <img class="card-img-top" src="classes/imagens/ney.jpeg" alt="Ney Matogrosso">
+      <div class="card-body">
+        <h5 class="card-title">NEY MATOGROSSO</h5>
+        <p class="card-text">Garanta sua presença na turnê "Bloco na Rua"</p>
+        <a href="#" class="btn btn-primary">Comprar Ingresso</a>
+      </div>
+    </div>
+
+    <div class="card event-card">
+      <img class="card-img-top" src="classes/imagens/sisters.jpeg" alt="The Sisters of Mercy">
+      <div class="card-body">
+        <h5 class="card-title">THE SISTERS OF MERCY</h5>
+        <p class="card-text">Turne na america latina com 4 shows garantidos pelo Brasil</p>
+        <a href="#" class="btn btn-primary">Comprar Ingresso</a>
+      </div>
+    </div>
+
+    <div class="card event-card">
+      <img class="card-img-top" src="classes/imagens/roxy.jpeg" alt="Roxy">
+      <div class="card-body">
+        <h5 class="card-title">ROXY DINNER SHOW</h5>
+        <p class="card-text">Dirigido por Abel Gomes, o espetáculo promete uma viagem pelas tradições brasileiras, com gastronomia, música, dança, poesia e arte visual.</p>
+        <a href="#" class="btn btn-primary">Comprar Ingresso</a>
+      </div>
+    </div>
+
+    <div class="card event-card">
+      <img class="card-img-top" src="classes/imagens/gustavo.jpeg" alt="Gustavo Mioto">
+      <div class="card-body">
+        <h5 class="card-title">GUSTAVO MIOTO</h5>
+        <p class="card-text">O lançamento de uma turnê inédita, que promete proporcionar aos fãs uma experiência mais intimista</p>
+        <a href="#" class="btn btn-primary">Comprar Ingresso</a>
+      </div>
+    </div>
+
+    <div class="card event-card">
+      <img class="card-img-top" src="classes/imagens/bb.jpeg" alt="Bad Bunny">
+      <div class="card-body">
+        <h5 class="card-title">BAD BUNNY</h5>
+        <p class="card-text">Ele fará história como o primeiro artista latino a se apresentar em estádios no mundo todo, incluindo Europa, Austrália e América Latina</p>
+        <a href="#" class="btn btn-primary">Comprar Ingresso</a>
+      </div>
+    </div>
+
+    <div class="card event-card">
+      <img class="card-img-top" src="classes/imagens/zoo.jpeg" alt="Zoologico de São Paulo">
+      <div class="card-body">
+        <h5 class="card-title">ZOOLOGICO DE SÃO PAULO</h5>
+        <p class="card-text">Contando com mais de dois mil animais de diversas espécies, proporcionando aos visitantes a oportunidade de conhecer um pouco mais sobre a fauna do Brasil e do mundo</p>
+        <a href="#" class="btn btn-primary">Comprar Ingresso</a>
+      </div>
+    </div>
+
+    <div class="card event-card">
+      <img class="card-img-top" src="classes/imagens/jardim.jpeg" alt="Jardim">
+      <div class="card-body">
+        <h5 class="card-title">JARDIM BOTÂNICO</h5>
+        <p class="card-text">Um espaço centenário e abriga coleções históricas de plantas vivas.</p>
+        <a href="#" class="btn btn-primary">Comprar Ingresso</a>
+      </div>
+    </div>
+  </div>
+
   <footer>
     <p>&copy; 2025 - TICKETMAIS</p>
   </footer>
 
-  
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
