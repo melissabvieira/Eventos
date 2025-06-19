@@ -1,0 +1,18 @@
+{
+    "name": "fatec/eventos",
+
+    "autoload": {
+        "psr-4": {
+            "Fatec\\Eventos\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Melissa Beatriz Vieira",
+            "email": "160934310+melissabvieira@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "mongodb/mongodb": "^2.1"
+    }
+}
