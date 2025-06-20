@@ -9,4 +9,13 @@ try {
 } catch (Exception $e) {
     die("Erro ao conectar no MongoDB: " . $e->getMessage());
 }
+
+function listarEventos() {
+    global $collection;
+    try {
+        return $collection->find()->toArray();
+    } catch (Exception $e) {
+        die("Erro ao listar eventos: " . $e->getMessage());
+    }
+}
 ?>

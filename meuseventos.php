@@ -1,27 +1,18 @@
 <?php
-require 'classes/bd.php';
+session_start();
+
+if (!isset($_SESSION['usuario'])) {
+    header('Location: login.php');
+    exit();
+}
+
+require 'classes/bd.php'; 
+$eventos = listarEventos();
 
 if (isset($_GET['ok'])) {
     echo "<script>alert('Evento criado com sucesso!');</script>";
 }
-
-$totalEventos = $collection->countDocuments();
-
-if ($totalEventos === 0) {
-    $collection->insertOne([
-        'tema' => 'Lollapalooza',
-        'descricao_evento' => 'Festival de eventos',
-        'data_evento' => '2025-04-04T20:00',
-        'promotor' => 'Sistema de Teste', 
-        'localizacao' => 'Local de Teste',
-        'tags' => 'teste,exemplo',
-        'vagas_totais' => 100
-    ]);
-}
-
-$eventos = $collection->find();
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -49,8 +40,11 @@ $eventos = $collection->find();
             font-size: 24px;
         }
         .evento {
-            background: #fff; padding: 15px; margin-bottom: 10px;
-            border: 1px solid #ccc; border-radius: 5px;
+            background: #fff;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
         .botoes {
             margin-top: 10px;
@@ -58,6 +52,11 @@ $eventos = $collection->find();
         .botoes a, .botoes form {
             display: inline-block;
             margin-right: 10px;
+        }
+        .evento img {
+            max-width: 300px;
+            display: block;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -68,21 +67,39 @@ $eventos = $collection->find();
     <a href="home.php" class="btn btn-light">Voltar</a>
 </header>
 
-<?php foreach ($eventos as $evento): ?>
-    <div class="evento">
-        <h2><?= isset($evento['tema']) ? htmlspecialchars($evento['tema']) : 'Sem título' ?></h2>
-        <p><?= isset($evento['descricao_evento']) ? htmlspecialchars($evento['descricao_evento']) : 'Sem descrição' ?></p>
-        <p><strong>Data:</strong> <?= isset($evento['data_evento']) ? htmlspecialchars($evento['data_evento']) : 'Sem data' ?></p>
+<?php if (!empty($eventos)): ?>
+    <?php foreach ($eventos as $evento): ?>
+        <div class="evento">
+            <h2><?= isset($evento['tema']) ? htmlspecialchars($evento['tema']) : 'Sem título' ?></h2>
 
-        <div class="botoes">
-            <a href="editarevento.php?id=<?= (string) $evento['_id'] ?>" class="btn btn-primary btn-sm">Editar</a>
-            <form action="excluirevento.php" method="POST" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir este evento?');">
-                <input type="hidden" name="id" value="<?= (string) $evento['_id'] ?>">
-                <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
-            </form>
+            <?php if (!empty($evento['imagem'])): ?>
+                <img src="uploads/<?= htmlspecialchars($evento['imagem']) ?>" alt="Imagem do evento">
+            <?php endif; ?>
+
+            <p><?= isset($evento['descricao_evento']) ? htmlspecialchars($evento['descricao_evento']) : 'Sem descrição' ?></p>
+
+            <p><strong>Data:</strong> 
+                <?php 
+                if (isset($evento['data_evento']) && $evento['data_evento'] instanceof MongoDB\BSON\UTCDateTime) {
+                    echo htmlspecialchars($evento['data_evento']->toDateTime()->format('d/m/Y H:i'));
+                } else {
+                    echo 'Sem data';
+                }
+                ?>
+            </p>
+
+            <div class="botoes">
+                <a href="editarevento.php?id=<?= (string) $evento['_id'] ?>" class="btn btn-primary btn-sm">Editar</a>
+                <form action="excluirevento.php" method="POST" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir este evento?');">
+                    <input type="hidden" name="id" value="<?= (string) $evento['_id'] ?>">
+                    <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                </form>
+            </div>
         </div>
-    </div>
-<?php endforeach; ?>
+    <?php endforeach; ?>
+<?php else: ?>
+    <p>Nenhum evento disponível no momento.</p>
+<?php endif; ?>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>

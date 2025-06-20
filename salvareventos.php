@@ -1,48 +1,69 @@
 <?php
-require 'classes/bd.php';
+require 'vendor/autoload.php'; 
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $evento = [
-        'tema' => $_POST['tema'],
-        'descricao_evento' => $_POST['descricao_evento'],
-        'data_evento' => $_POST['data_evento'],
-        'promotor' => $_POST['promotor'],
-        'localizacao' => $_POST['localizacao'],
-        'tags' => $_POST['tags'],
-        'vagas_totais' => (int) $_POST['vagas_totais']
-    ];
+use MongoDB\Client;
 
-    $collection->insertOne($evento);
-    header('Location: meuseventos.php?ok=1');
-    exit;
+session_start();
+
+if (!isset($_SESSION['usuario'])) {
+    header('Location: login.php');
+    exit();
 }
 
+$client = new Client("mongodb://localhost:27017");
+$db = $client->selectDatabase('eventos'); 
+$collection = $db->selectCollection('eventos');
 
-if (!$tema || !$descricao || !$dataEventoStr || !$promotor || !$localizacao || $vagasTotais <= 0) {
-    die("Por favor, preencha todos os campos obrigatórios corretamente.");
+$tema = $_POST['tema'] ?? '';
+$descricao_evento = $_POST['descricao_evento'] ?? '';
+$data_evento = $_POST['data_evento'] ?? '';
+$promotor = $_POST['promotor'] ?? '';
+$localizacao = $_POST['localizacao'] ?? '';
+$vagas_totais = (int)($_POST['vagas_totais'] ?? 0);
+
+if (isset($_FILES['imagem_evento']) && $_FILES['imagem_evento']['error'] === UPLOAD_ERR_OK) {
+    $uploadDir = __DIR__ . '/uploads/';
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
+    }
+    
+    $nomeArquivo = uniqid() . '_' . basename($_FILES['imagem_evento']['name']);
+    $uploadFile = $uploadDir . $nomeArquivo;
+    
+    if (!move_uploaded_file($_FILES['imagem_evento']['tmp_name'], $uploadFile)) {
+        echo "Erro ao salvar imagem.";
+        exit();
+    }
+    $imagem = $nomeArquivo;
+} else {
+    echo "Erro no upload da imagem.";
+    exit();
 }
 
 try {
-    $dataEvento = new DateTime($dataEventoStr);
-    $dataEventoMongo = new UTCDateTime($dataEvento->getTimestamp() * 1000);
+    $dateTime = new DateTime($data_evento);
+    $dataMongo = new MongoDB\BSON\UTCDateTime($dateTime->getTimestamp() * 1000);
 } catch (Exception $e) {
-    die("Data inválida.");
+    echo "Data inválida.";
+    exit();
 }
 
 $evento = [
     'tema' => $tema,
-    'descricao_evento' => $descricao,
-    'data_evento' => $dataEventoMongo,
-    'inscritos' => $inscritos,
-    'promotor' => [ 'nome' => $promotor ],
-    'localizacao' => [ 'endereco' => $localizacao ],
-    'tags' => $tags,
-    'vagas_totais' => $vagasTotais,
-    'vagas_disponiveis' => $vagasDisponiveis
+    'descricao_evento' => $descricao_evento,
+    'data_evento' => $dataMongo,
+    'promotor' => $promotor,
+    'localizacao' => $localizacao,
+    'vagas_totais' => $vagas_totais,
+    'imagem' => $imagem,
 ];
 
-$insercao = $colecao->insertOne($evento);
+$result = $collection->insertOne($evento);
 
-header("Location: criareventos.php?ok=1");
-exit;
+if ($result->getInsertedCount() === 1) {
+    header('Location: criareventos.php?ok=1');
+    exit();
+} else {
+    echo "Erro ao salvar o evento no banco.";
+}
 ?>

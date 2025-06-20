@@ -106,7 +106,7 @@ if (isset($_GET['ok'])) {
 <div class="container">
   <div class="card">
     <h2 class="text-center">Criar Novo Evento</h2>
-    <form method="POST" action="salvareventos.php">
+    <form method="POST" action="salvareventos.php" enctype="multipart/form-data">
       <div class="form-group">
         <label for="tema">Tema</label>
         <input type="text" class="form-control" name="tema" id="tema" required>
@@ -130,6 +130,11 @@ if (isset($_GET['ok'])) {
       <div class="form-group">
         <label for="vagas_totais">Vagas Totais</label>
         <input type="number" class="form-control" name="vagas_totais" id="vagas_totais" required>
+      </div>
+
+      <div class="form-group">
+        <label for="imagem_evento">Imagem do Evento</label>
+        <input type="file" class="form-control-file" name="imagem_evento" id="imagem_evento" accept="image/*" required>
       </div>
 
       <div class="text-center btn-group">
