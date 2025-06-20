@@ -96,7 +96,7 @@ try {
                 ?>
             </p>
 
-            <p><strong>Local:</strong> <?= isset($evento['local']) ? htmlspecialchars($evento['local']) : '-' ?></p>
+            <p><strong>Local:</strong> <?= isset($evento['localizacao']) ? htmlspecialchars($evento['localizacao']) : '-' ?></p>
 
             <p><strong>Ingresso comprado em:</strong> 
                 <?php
