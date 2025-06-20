@@ -14,9 +14,9 @@ if (!is_array($usuario) || !isset($usuario['tipo'])) {
 }
 
 require 'classes/bd.php';
+
 $eventosBanco = listarEventos();
 ?>
-
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -169,9 +169,12 @@ $eventosBanco = listarEventos();
           <img class="card-img-top" src="classes/imagens/placeholder.jpeg" alt="Sem imagem">
         <?php endif; ?>
         <div class="card-body">
-          <h5 class="card-title"><?php echo htmlspecialchars($evento['tema']); ?></h5>
-          <p class="card-text"><?php echo htmlspecialchars($evento['descricao_evento']); ?></p>
-          <a href="#" class="btn btn-primary">Comprar Ingresso</a>
+          <h5 class="card-title"><?php echo htmlspecialchars($evento['tema'] ?? 'Evento'); ?></h5>
+          <p class="card-text"><?php echo htmlspecialchars($evento['descricao_evento'] ?? 'Descrição não disponível.'); ?></p>
+          <form action="comprar.php" method="POST">
+            <input type="hidden" name="evento_id" value="<?php echo htmlspecialchars((string)$evento['_id']); ?>">
+            <button type="submit" class="btn btn-primary">Comprar Ingresso</button>
+          </form>
         </div>
       </div>
     <?php endforeach; ?>
@@ -179,6 +182,7 @@ $eventosBanco = listarEventos();
     <p>Nenhum evento disponível no momento.</p>
   <?php endif; ?>
 </div>
+
 
 <div class="card-container">
   <div class="card event-card">
@@ -189,7 +193,6 @@ $eventosBanco = listarEventos();
       <a href="#" class="btn btn-primary">Comprar Ingresso</a>
     </div>
   </div>
-
   <div class="card event-card">
     <img class="card-img-top" src="classes/imagens/sisters.jpeg" alt="The Sisters of Mercy">
     <div class="card-body">
@@ -198,7 +201,6 @@ $eventosBanco = listarEventos();
       <a href="#" class="btn btn-primary">Comprar Ingresso</a>
     </div>
   </div>
-
   <div class="card event-card">
     <img class="card-img-top" src="classes/imagens/roxy.jpeg" alt="Roxy">
     <div class="card-body">
@@ -207,7 +209,6 @@ $eventosBanco = listarEventos();
       <a href="#" class="btn btn-primary">Comprar Ingresso</a>
     </div>
   </div>
-
   <div class="card event-card">
     <img class="card-img-top" src="classes/imagens/gustavo.jpeg" alt="Gustavo Mioto">
     <div class="card-body">
@@ -216,7 +217,6 @@ $eventosBanco = listarEventos();
       <a href="#" class="btn btn-primary">Comprar Ingresso</a>
     </div>
   </div>
-
   <div class="card event-card">
     <img class="card-img-top" src="classes/imagens/bb.jpeg" alt="Bad Bunny">
     <div class="card-body">
@@ -225,7 +225,6 @@ $eventosBanco = listarEventos();
       <a href="#" class="btn btn-primary">Comprar Ingresso</a>
     </div>
   </div>
-
   <div class="card event-card">
     <img class="card-img-top" src="classes/imagens/zoo.jpeg" alt="Zoologico de São Paulo">
     <div class="card-body">
@@ -234,7 +233,6 @@ $eventosBanco = listarEventos();
       <a href="#" class="btn btn-primary">Comprar Ingresso</a>
     </div>
   </div>
-
   <div class="card event-card">
     <img class="card-img-top" src="classes/imagens/jardim.jpeg" alt="Jardim">
     <div class="card-body">
@@ -244,7 +242,6 @@ $eventosBanco = listarEventos();
     </div>
   </div>
 </div>
-
 
 <footer>
   <p>&copy; 2025 - TICKETMAIS</p>

@@ -5,17 +5,20 @@ use MongoDB\Client;
 try {
     $mongoClient = new Client("mongodb://localhost:27017");
     $db = $mongoClient->selectDatabase('eventos');
-    $collection = $db->selectCollection('eventos');
+    $collectionEventos = $db->selectCollection('eventos');
+    $collectionUsuarios = $db->selectCollection('usuarios');
+
 } catch (Exception $e) {
     die("Erro ao conectar no MongoDB: " . $e->getMessage());
 }
 
 function listarEventos() {
-    global $collection;
+    global $collectionEventos;  
     try {
-        return $collection->find()->toArray();
+        return $collectionEventos->find()->toArray();
     } catch (Exception $e) {
         die("Erro ao listar eventos: " . $e->getMessage());
     }
 }
+
 ?>

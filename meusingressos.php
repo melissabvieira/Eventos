@@ -1,22 +1,35 @@
 <?php
+session_start();
 require 'classes/bd.php';
 
-$ingressos = $db->ingressos->find()->toArray(); 
+if (!isset($_SESSION['usuario'])) {
+    header('Location: login.php');
+    exit();
+}
+
+$usuario = $_SESSION['usuario'];
+$usuario_id = $usuario['_id'];
+
+try {
+    $collectionIngressos = $db->selectCollection('ingressos');
+    $ingressos = $collectionIngressos->find(['usuario_id' => $usuario_id])->toArray();
+
+    $collectionEventos = $db->selectCollection('eventos');
+} catch (Exception $e) {
+    die('Erro ao carregar ingressos: ' . $e->getMessage());
+}
 ?>
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8" />
     <title>Meus Ingressos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
     <style>
-        body {
-            background: #f4f4f4;
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
+        body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
         header {
             background-color: #4d56dd;
             color: white;
@@ -36,24 +49,25 @@ $ingressos = $db->ingressos->find()->toArray();
         .ingresso {
             background: #fff;
             padding: 15px;
-            margin: 15px auto;
+            margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            max-width: 600px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         .ingresso h2 {
-            margin-top: 0;
             color: #4d56dd;
+            margin-top: 0;
         }
         .ingresso p {
             margin: 5px 0;
         }
-        .mensagem {
-            text-align: center;
-            margin-top: 50px;
-            color: #777;
-            font-size: 18px;
+        a.btn-light {
+            color: #4d56dd;
+            border: 1px solid #4d56dd;
+        }
+        a.btn-light:hover {
+            background-color: #4d56dd;
+            color: white;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -64,17 +78,39 @@ $ingressos = $db->ingressos->find()->toArray();
     <a href="home.php" class="btn btn-light">Voltar</a>
 </header>
 
-<?php if (count($ingressos) === 0): ?>
-    <div class="mensagem">Nenhum ingresso foi adicionado =(</div>
-<?php else: ?>
+<?php if (!empty($ingressos)): ?>
     <?php foreach ($ingressos as $ingresso): ?>
+        <?php
+            $evento = $collectionEventos->findOne(['_id' => $ingresso['evento_id']]);
+        ?>
         <div class="ingresso">
-            <h2><?= htmlspecialchars($ingresso['evento_nome'] ?? 'Sem nome') ?></h2>
-            <p><strong>Data:</strong> <?= htmlspecialchars($ingresso['data_evento'] ?? '-') ?></p>
-            <p><strong>Local:</strong> <?= htmlspecialchars($ingresso['local'] ?? '-') ?></p>
-            <p><strong>Ingresso:</strong> <?= htmlspecialchars($ingresso['tipo_ingresso'] ?? '-') ?></p>
+            <h2><?= isset($evento['tema']) ? htmlspecialchars($evento['tema']) : 'Sem título' ?></h2>
+
+            <p><strong>Data do Evento:</strong> 
+                <?php 
+                if (isset($evento['data_evento']) && $evento['data_evento'] instanceof MongoDB\BSON\UTCDateTime) {
+                    echo htmlspecialchars($evento['data_evento']->toDateTime()->format('d/m/Y H:i'));
+                } else {
+                    echo 'Sem data';
+                }
+                ?>
+            </p>
+
+            <p><strong>Local:</strong> <?= isset($evento['local']) ? htmlspecialchars($evento['local']) : '-' ?></p>
+
+            <p><strong>Ingresso comprado em:</strong> 
+                <?php
+                if (isset($ingresso['data_compra']) && $ingresso['data_compra'] instanceof MongoDB\BSON\UTCDateTime) {
+                    echo htmlspecialchars($ingresso['data_compra']->toDateTime()->format('d/m/Y H:i'));
+                } else {
+                    echo '-';
+                }
+                ?>
+            </p>
         </div>
     <?php endforeach; ?>
+<?php else: ?>
+    <p>Você ainda não comprou nenhum ingresso.</p>
 <?php endif; ?>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
