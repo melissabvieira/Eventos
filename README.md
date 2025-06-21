@@ -61,11 +61,17 @@ Clone este repositório:
 
 ```bash
 - git clone;
+
 - cd Eventos;
+
 - composer install -> Verifique se vieram no git clone;
+
 - Configure o MongoDB para rodar localmente (padrão mongodb://localhost:27017);
-- Crie o banco de dados eventos;
+
+- Crie o banco de dados eventos no mongoDB;
+
 - Opcional: Insira usuários iniciais (administrador e cliente) no MongoDB para testes -> basta rodar no terminal 'php usuarios.php'
+
 - Configure seu servidor web para apontar para a pasta do projeto.
 
 
