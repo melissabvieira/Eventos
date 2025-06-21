@@ -84,8 +84,12 @@ try {
             $evento = $collectionEventos->findOne(['_id' => $ingresso['evento_id']]);
         ?>
         <div class="ingresso">
-            <h2><?= isset($evento['tema']) ? htmlspecialchars($evento['tema']) : 'Sem título' ?></h2>
-
+        <h2><?= isset($evento['tema']) ? htmlspecialchars($evento['tema']) : 'Sem título' ?></h2>
+    
+            <?php if (!empty($evento['imagem'])): ?>
+        <img src="uploads/<?= htmlspecialchars($evento['imagem']) ?>" alt="Imagem do evento" style="max-width: 300px; display: block; margin-bottom: 10px;">
+            <?php endif; ?>
+            
             <p><strong>Data do Evento:</strong> 
                 <?php 
                 if (isset($evento['data_evento']) && $evento['data_evento'] instanceof MongoDB\BSON\UTCDateTime) {
@@ -101,7 +105,7 @@ try {
             <p><strong>Ingresso comprado em:</strong> 
                 <?php
                 if (isset($ingresso['data_compra']) && $ingresso['data_compra'] instanceof MongoDB\BSON\UTCDateTime) {
-                    echo htmlspecialchars($ingresso['data_compra']->toDateTime()->format('d/m/Y H:i'));
+                    echo htmlspecialchars($ingresso['data_compra']->toDateTime()->format('d/m/Y'));
                 } else {
                     echo '-';
                 }
