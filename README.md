@@ -1,28 +1,73 @@
-### 🎉 Plataforma de Eventos - Projeto de Banco de Dados Não Relacional
+# 🎊EVENTOS 
 
-Este repositório contém o projeto Plataforma de Eventos, desenvolvido em PHP com conexão ao MongoDB, como parte da disciplina de Banco de Dados Não Relacional do 3º semestre da Fatec Araras.
+TICKETMAIS é um sistema web para compra de ingressos para eventos, desenvolvido em PHP com backend em MongoDB. Possui autenticação de usuários (administradores e clientes), gestão de eventos, compra e visualização de ingressos.
 
-### 👥 Integrantes
-Melissa Vieira e Caroline Vantim
+---
 
+## 📌Tecnologias Utilizadas
 
-### ⚙️ Funcionalidades: 
-C R U D
-
-Cadastro de eventos
-
-Listagem de eventos
-
-Edição e exclusão de eventos
-
-Integração com o MongoDB para armazenamento de dados
-
-Interface web simples para interação com os dados
+- PHP 7+ (orientação a objetos e sessões)
+- MongoDB (NoSQL para armazenamento de eventos, usuários e ingressos)
+- Composer (para gerenciamento da biblioteca MongoDB PHP Driver)
+- Bootstrap 4 (para interface responsiva e estilização)
+- JavaScript (bibliotecas JQuery e Popper para funcionalidade do Bootstrap)
 
 
 
-### 🎓 Instituição
-FATEC - Faculdade de Tecnologia de Araras
-Curso de Desenvolvimento de Software Multiplataforma
-Disciplina: Banco de Dados Não Relacional
-3º Semestre 
+## 📌Funcionalidades
+
+### Usuários
+- **Administrador (adm)**: Pode criar, editar e excluir eventos. Visualiza seus eventos cadastrados.
+- **Cliente**: Pode visualizar eventos e comprar ingressos. Visualiza os ingressos comprados.
+
+### Eventos
+- CRUD completo para eventos (Create, Read, Update, Delete).
+- Cada evento possui tema, descrição, data, promotor, localização, vagas totais e imagem.
+
+### Ingressos
+- Compra de ingressos vinculada a usuário e evento.
+- Visualização dos ingressos comprados pelo cliente.
+
+### Autenticação e Controle de Sessão
+- Login e logout.
+- Proteção das páginas para usuários logados.
+- Controle de acesso baseado no tipo de usuário.
+
+---
+
+## 📌Configuração e Instalação
+
+### Pré-requisitos
+
+- PHP 7.4+ com extensões MongoDB instaladas
+- Servidor web (ex: Apache, Nginx)
+- MongoDB instalado e em execução localmente
+- Composer instalado para gerenciar dependências PHP
+
+
+### 📌Uso
+
+Acesse a página de login (login.php) para entrar no sistema.
+
+Usuários administradores podem criar, editar e excluir eventos.
+
+Usuários clientes podem comprar ingressos e visualizar seus ingressos.
+
+
+
+### 📌Passo a passo de como utilizar:
+
+Clone este repositório:
+
+```bash
+- git clone;
+- cd Eventos;
+- composer install -> Verifique se vieram no git clone;
+- Configure o MongoDB para rodar localmente (padrão mongodb://localhost:27017);
+- Crie o banco de dados eventos;
+- Opcional: Insira usuários iniciais (administrador e cliente) no MongoDB para testes -> basta rodar no terminal 'php usuarios.php'
+- Configure seu servidor web para apontar para a pasta do projeto.
+
+
+
+
