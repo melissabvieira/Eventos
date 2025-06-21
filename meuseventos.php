@@ -1,23 +1,24 @@
 <?php
 session_start();
+require 'classes/bd.php';
 
 if (!isset($_SESSION['usuario'])) {
     header('Location: login.php');
     exit();
 }
 
-require 'classes/bd.php'; 
 $eventos = listarEventos();
 
-if (isset($_GET['ok'])) {
-    echo "<script>alert('Evento criado com sucesso!');</script>";
+if (isset($_GET['editado'])) {
+    echo "<script>alert('Evento editado com sucesso!');</script>";
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8" />
-    <title>Meus Eventos</title>
+    <title>Meus Eventos - TICKETMAIS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
@@ -70,13 +71,13 @@ if (isset($_GET['ok'])) {
 <?php if (!empty($eventos)): ?>
     <?php foreach ($eventos as $evento): ?>
         <div class="evento">
-            <h2><?= isset($evento['tema']) ? htmlspecialchars($evento['tema']) : 'Sem título' ?></h2>
+            <h2><?= htmlspecialchars($evento['tema'] ?? 'Sem título') ?></h2>
 
             <?php if (!empty($evento['imagem'])): ?>
                 <img src="uploads/<?= htmlspecialchars($evento['imagem']) ?>" alt="Imagem do evento">
             <?php endif; ?>
 
-            <p><?= isset($evento['descricao_evento']) ? htmlspecialchars($evento['descricao_evento']) : 'Sem descrição' ?></p>
+            <p><?= htmlspecialchars($evento['descricao_evento'] ?? 'Sem descrição') ?></p>
 
             <p><strong>Data:</strong> 
                 <?php 
@@ -89,9 +90,10 @@ if (isset($_GET['ok'])) {
             </p>
 
             <div class="botoes">
-                <a href="editarevento.php?id=<?= (string) $evento['_id'] ?>" class="btn btn-primary btn-sm">Editar</a>
+                <a href="editarevento.php?id=<?= (string)$evento['_id'] ?>" class="btn btn-primary btn-sm">Editar</a>
+                
                 <form action="excluirevento.php" method="POST" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir este evento?');">
-                    <input type="hidden" name="id" value="<?= (string) $evento['_id'] ?>">
+                    <input type="hidden" name="id" value="<?= (string)$evento['_id'] ?>">
                     <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
                 </form>
             </div>

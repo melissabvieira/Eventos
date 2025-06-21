@@ -35,14 +35,14 @@ $eventosBanco = listarEventos();
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      padding-top: 80px;
-      padding-bottom: 60px;
+      padding-top: 50px; 
+      padding-bottom: 40px; 
       background-color: #f0f0f0;
     }
     header {
       background-color: #4d56dd;
       color: white;
-      padding: 30px 40px;
+      padding: 15px 30px; 
       position: fixed;
       top: 0;
       width: 100%;
@@ -50,35 +50,45 @@ $eventosBanco = listarEventos();
       justify-content: space-between;
       align-items: center;
       z-index: 1000;
+      height: 50px; 
+      box-sizing: border-box;
     }
     .ticketmais {
       font-style: italic;
-      font-size: 20px;
+      font-size: 18px; 
+      font-weight: bold;
     }
     .acoes {
       display: flex;
-      gap: 15px;
+      gap: 10px;
+      font-size: 14px; 
     }
     .acoes div {
       background-color: white;
       color: #4d56dd;
-      padding: 5px 10px;
+      padding: 4px 8px;
       border-radius: 5px;
       font-weight: bold;
       cursor: pointer;
+      line-height: 1.2;
+      user-select: none;
     }
     footer {
       background-color: #4d56dd;
       color: white;
-      padding: 20px 40px;
+      padding: 10px 20px; 
       text-align: center;
       position: fixed;
       bottom: 0;
       width: 100%;
+      font-size: 14px;
+      height: 35px; 
+      line-height: 35px;
+      box-sizing: border-box;
     }
     .carousel, .carousel-item {
       width: 100vw;
-      height: 100vh;
+      height: 60vh; 
       margin: 0;
     }
     .carousel-item img {
@@ -90,12 +100,32 @@ $eventosBanco = listarEventos();
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      margin-top: 30px;
-      padding: 0 20px;
+      margin-top: 20px; 
+      padding: 0 10px;
     }
     .event-card {
-      width: 300px;
-      margin: 15px;
+      width: 280px; 
+      margin: 10px; 
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+      background-color: white;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .event-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    .card-img-top {
+      height: 160px;
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 12px 15px;
+    }
+    .btn-primary {
+      font-size: 14px;
+      padding: 6px 12px;
     }
   </style>
 </head>
@@ -173,15 +203,16 @@ $eventosBanco = listarEventos();
           <p class="card-text"><?php echo htmlspecialchars($evento['descricao_evento'] ?? 'Descrição não disponível.'); ?></p>
           <form action="comprar.php" method="POST">
             <input type="hidden" name="evento_id" value="<?php echo htmlspecialchars((string)$evento['_id']); ?>">
-            <button type="submit" class="btn btn-primary">Comprar Ingresso</button>
+            <button type="submit" class="btn btn-primary btn-sm">Comprar Ingresso</button>
           </form>
         </div>
       </div>
     <?php endforeach; ?>
   <?php else: ?>
-    <p>Nenhum evento disponível no momento.</p>
+    <p style="text-align:center;">Nenhum evento disponível no momento.</p>
   <?php endif; ?>
 </div>
+
 <footer>
   <p>&copy; 2025 - TICKETMAIS</p>
 </footer>
