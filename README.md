@@ -57,12 +57,10 @@ Usuários clientes podem comprar ingressos e visualizar seus ingressos.
 
 ### 📌Passo a passo de como utilizar:
 
-Clone este repositório:
-
 ```bash
-- git clone;
+- Crie uma pasta no seguinte caminho: C:\xampp\htdocs;
 
-- cd Eventos;
+- Abra o CDM da sua máquina e faça os seguintes comandos: cd .. -> cd .. (Até chegar a C: \) -> cd xampp -> cd htdocs -> git clone https://github.com/melissabvieira/Eventos.git;
 
 - composer install -> Verifique se vieram no git clone;
 
@@ -70,9 +68,11 @@ Clone este repositório:
 
 - Crie o banco de dados eventos no mongoDB;
 
-- Opcional: Insira usuários iniciais (administrador e cliente) no MongoDB para testes -> basta rodar no terminal 'php usuarios.php'
+- Obrigatório: Insira usuários iniciais (administrador e cliente) no MongoDB para testes -> basta rodar no terminal 'php usuarios.php'
 
-- Configure seu servidor web para apontar para a pasta do projeto.
+- Configure seu servidor web para apontar para a pasta do projeto, abrindo o XAMPP e ligando o APACHE;
+
+- Abra sua aba no google e pesquise "localhost/Eventos-main".
 
 
 
