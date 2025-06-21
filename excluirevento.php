@@ -10,7 +10,7 @@ if (!isset($_SESSION['usuario'])) {
 if ($_SERVER["REQUEST_METHOD"] === "POST" && !empty($_POST['id'])) {
     try {
         $id = new MongoDB\BSON\ObjectId($_POST['id']);
-        $collection->deleteOne(['_id' => $id]);
+        $collectionEventos->deleteOne(['_id' => $id]);
     } catch (Exception $e) {
         echo "Erro ao excluir evento: " . $e->getMessage();
         exit();
